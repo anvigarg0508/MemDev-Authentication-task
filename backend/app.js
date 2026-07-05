@@ -6,40 +6,69 @@ const app = express();
 app.use(cors())
 
 app.use(express.json());
+const users = [];
 
 app.get("/", (req, res) => {
   res.send("Backend is working!");
 });
+app.post("/signup", (req, res) => {
+  const { name, email, password } = req.body;
 
-app.post("/login", (req, res) => {
-    const {email,password} = req.body;
+  // Check if user already exists
+  const existingUser = users.find(user => user.email === email);
 
-    console.log(email);
-    console.log(password);
-
-  if (
-    email === "admin@gmail.com" &&
-    password === "1234"
-  ) {
-    const token = jwt.sign(
-        {
-            email : email,
-        },
-        "mysecretkey"
-    );
-
-    return res.json(
-        {
-            success: true,
-            message:"Login Successful",
-            token: token,
-        }
-    );
+  if (existingUser) {
+    return res.json({
+      success: false,
+      message: "User already exists",
+    });
   }
 
+  // Store new user
+  users.push({
+    name,
+    email,
+    password,
+  });
+
+  console.log(users);
+
   res.json({
-    success: false,
-    message: "Invalid Credentials",
+    success: true,
+    message: "Signup Successful",
+  });
+});
+
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  const user = users.find(user => user.email === email);
+
+  if (!user) {
+    return res.json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  if (user.password !== password) {
+    return res.json({
+      success: false,
+      message: "Incorrect Password",
+    });
+  }
+
+  const token = jwt.sign(
+    {
+      email: user.email,
+    },
+    "mysecretkey"
+  );
+
+  res.json({
+    success: true,
+    message: "Login Successful",
+    token,
   });
 });
 
