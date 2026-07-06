@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 function Signup(){
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     return(
         <div className="flex flex-col items-center mt-20">
@@ -52,6 +56,7 @@ function Signup(){
 
       console.log(data);
       alert(data.message);
+      navigate("/login");
 
     } catch (error) {
       console.log(error);
@@ -61,6 +66,10 @@ function Signup(){
 >
   Sign up
 </button>
+<p className="mt-4">
+  Already have an account?{" "}
+  <Link to="/login">Login</Link>
+</p>
       
         </div>
     )

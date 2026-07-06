@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -43,8 +44,13 @@ function Login() {
       const data = await response.json();
 
       console.log(data);
-      alert(data.token);
 
+      if (data.success) {
+          alert("Login Successful");
+          console.log(data.token);
+    } else {
+          alert(data.message);
+    }
     } catch (error) {
       console.log(error);
       alert("Something went wrong");
@@ -53,6 +59,11 @@ function Login() {
 >
   Login
 </button>
+<p className="mt-4">
+  Don't have an account?{" "}
+  <Link to="/signup">Sign Up</Link>
+</p>
+
     </div>
   )
 }
