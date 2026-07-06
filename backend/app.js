@@ -1,48 +1,49 @@
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const express = require("express");
+const User = require("./models/User");
 
 const app = express();
 app.use(cors())
 
 app.use(express.json());
-const users = [];
+// const users = [];
 
 app.get("/", (req, res) => {
   res.send("Backend is working!");
 });
-app.post("/signup", (req, res) => {
+app.post("/signup", async(req, res) => {
   const { name, email, password } = req.body;
 
   // Check if user already exists
-  const existingUser = users.find(user => user.email === email);
-
-  if (existingUser) {
-    return res.json({
-      success: false,
-      message: "User already exists",
-    });
-  }
+  
 
   // Store new user
-  users.push({
-    name,
-    email,
-    password,
-  });
+  const existingUser = await User.findOne({ email });
 
-  console.log(users);
-
-  res.json({
-    success: true,
-    message: "Signup Successful",
+if (existingUser) {
+  return res.json({
+    success: false,
+    message: "User already exists",
   });
+}
+
+await User.create({
+  name,
+  email,
+  password,
 });
 
-app.post("/login", (req, res) => {
+res.json({
+  success: true,
+  message: "Signup Successful",
+});
+});
+
+app.post("/login", async(req, res) => {
   const { email, password } = req.body;
 
-  const user = users.find(user => user.email === email);
+  const user = await User.findOne({email});
 
   if (!user) {
     return res.json({
