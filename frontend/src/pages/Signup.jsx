@@ -9,25 +9,26 @@ function Signup(){
     const navigate = useNavigate();
 
     return(
-        <div className="flex flex-col items-center mt-20">
-      <h1 className="text-4xl font-bold mb-6">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+          <div className="bg-white shadow-lg rounded-xl p-8 w-96">
+      <h1 className="text-4xl font-bold text-center mb-6">
         Signup
       </h1>
 
-      <input
+      <input className="w-full border border-gray-300 rounded-md p-2 mb-4"
         type="text"
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <input
+      <input className="w-full border border-gray-300 rounded-md p-2 mb-4"
       type = "email"
       placeholder = "Email"
       value = {email}
       onChange={(e) => setEmail(e.target.value)}
       />
-      <input
+      <input className="w-full border border-gray-300 rounded-md p-2 mb-4"
         type="password"
         placeholder="Password"
         value={password}
@@ -35,6 +36,7 @@ function Signup(){
       />
 
       <button
+      className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
   onClick={async () => {
     try {
       const response = await fetch(
@@ -66,11 +68,11 @@ function Signup(){
 >
   Sign up
 </button>
-<p className="mt-4">
+<p className="text-center mt-4">
   Already have an account?{" "}
-  <Link to="/login">Login</Link>
+  <Link to="/login" classNamee="text-blue-600 hover:underline">Login</Link>
 </p>
-      
+      </div>
         </div>
     )
 

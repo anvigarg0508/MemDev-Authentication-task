@@ -6,27 +6,30 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   return (
-    <div className="flex flex-col items-center mt-20">
-      <h1 className="text-4xl font-bold mb-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+      <div className="bg-white shadow-lg rounded-xl p-8 w-96">
+      <h1 className="text-4xl font-bold text-center mb-6">
         Login
       </h1>
 
-      <input
+      <input className="w-full border border-gray-300 rounded-md p-2 mb-4"
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-      />
+/>
 
-      <input
+      <input className="w-full border border-gray-300 rounded-md p-2 mb-4"
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-      />
+/>
+      
 
       
      <button
+  className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
   onClick={async () => {
     try {
       const response = await fetch(
@@ -64,11 +67,12 @@ function Login() {
 >
   Login
 </button>
-<p className="mt-4">
+<p className="text-center mt-4">
   Don't have an account?{" "}
-  <Link to="/signup">Sign Up</Link>
+  <Link to="/signup"
+  classNamee="text-blue-600 hover:underline">Sign Up</Link>
 </p>
-
+    </div>
     </div>
   )
 }
